@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace autotests_software_testing
+namespace WebAddressbookTests
 {
     internal class GroupData
     {
