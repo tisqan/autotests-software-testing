@@ -8,14 +8,11 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class CreatecontactTest : TestBase
+    public class ContactTests : TestBase
     {
         [Test]
         public void CreateContact()
         {
-            OpenHomePage();
-            Login(new AccountData("admin", "secret"));
-            InitContactCreation();
             ContactData contact = new ContactData("Jhon", "Wick", "111@jw.com");
             contact.NickName = "JW5";
             contact.Title = "Jhon Wick";
@@ -29,9 +26,9 @@ namespace WebAddressbookTests
             contact.Bday = "18";
             contact.Bmonth = "June";
             contact.Byear = "1985";
-            FillFormContact(contact);
-            SubmitContactCreation();
-            ReturnToHomePage();
+            
+            app.Contacts.Create(contact);
+            
         }
 
         
