@@ -31,7 +31,7 @@ namespace WebAddressbookTests
         public void GoToHomePage()
         {
             driver.Navigate().GoToUrl(baseURL + "/addressbook/");
-            driver.Manage().Window.Maximize();
+            
         }
 
     }
