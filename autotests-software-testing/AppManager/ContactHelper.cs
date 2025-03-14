@@ -79,7 +79,7 @@ namespace WebAddressbookTests
 
         public ContactHelper EditContact(int index)
         {
-            driver.FindElement(By.XPath($"//td[{index}]/a/img")).Click();
+            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[{index}]/td[8]/a/img")).Click();
             return this;
         }
 

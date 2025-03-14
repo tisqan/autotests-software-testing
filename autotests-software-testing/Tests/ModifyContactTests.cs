@@ -27,7 +27,7 @@ namespace WebAddressbookTests
             contact.Bmonth = "July";
             contact.Byear = "1999";
             
-            app.Contacts.Modify(contact, 8);
+            app.Contacts.Modify(contact, 3);
             
         }
 
