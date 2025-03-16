@@ -14,17 +14,10 @@ namespace WebAddressbookTests
         [SetUp]
         public void SetUp()
         {
-            app = new ApplicationManager();
-            app.Navigator.GoToHomePage();
-            app.Auth.Login(new AccountData("admin", "secret"));
+            app = ApplicationManager.GetInstance();
 
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-           app.Stop();
-        }
 
     }
 }

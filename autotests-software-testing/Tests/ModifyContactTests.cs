@@ -14,13 +14,13 @@ namespace WebAddressbookTests
         public void ModifyContact()
         {
             ContactData contact = new ContactData("Jhon555", "Wick666", "111@jw.com");
-            contact.NickName = "JW5";
-            contact.Title = "Jhon Wick";
+            contact.NickName = null;
+            contact.Title = null;
             contact.Company = "JWCompany";
             contact.Address = "Russia";
             contact.HomePhone = "123-123";
             contact.MobilePhone = "32323232";
-            contact.Work = "GeneralWorker";
+            contact.Work = null;
             contact.Email2 = "222@jw.com";
             contact.HomePage = "HomePage";
             contact.Bday = "5";

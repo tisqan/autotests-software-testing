@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
@@ -17,7 +18,8 @@ namespace WebAddressbookTests
         private NavigationHelper navigationHelper;
         private GroupHelper groupHelper;
         private ContactHelper contactHelper;
-
+        
+        private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
         public ApplicationManager()
         {
@@ -33,11 +35,37 @@ namespace WebAddressbookTests
             contactHelper = new ContactHelper(this);
         }
 
-        public void Stop()
+        ~ApplicationManager()
         {
-            Driver.Quit();
+            try
+            {
+                driver.Quit();
+            }
+
+            catch (Exception)
+            {
+                
+            }
+
         }
-        
+
+        public static ApplicationManager GetInstance()
+        {
+            if (! app.IsValueCreated)
+            {
+                app.Value = new ApplicationManager();
+            }
+
+            return app.Value;
+
+        }
+
+        //public static void StopApp()
+        //{
+        //    app.Value.driver.Quit();
+        //}
+
+
         public LoginHelper Auth { get => loginHelper; }
         public NavigationHelper Navigator { get => navigationHelper; }
         public GroupHelper Groups { get => groupHelper; }
