@@ -10,7 +10,7 @@ namespace WebAddressbookTests
 {
 
     [TestFixture]
-    public class DeleteGroupTests : TestBase
+    public class DeleteGroupTests : AuthTestBase
     {
         [Test]
         public void DeleteGroup()

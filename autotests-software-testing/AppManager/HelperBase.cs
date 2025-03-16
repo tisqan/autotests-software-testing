@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 
 namespace WebAddressbookTests
@@ -28,6 +29,26 @@ namespace WebAddressbookTests
                 driver.FindElement(locator).SendKeys(text);
             }
             
+        }
+
+        public void Select(By locator, string text)
+        {
+            var selectElement = driver.FindElement(locator);
+            var select = new SelectElement(selectElement);
+            select.SelectByText(text);
+        }
+
+        public bool IsElementPresent(By locator)
+        {
+            try
+            {
+                driver.FindElement(locator);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
         }
 
     }

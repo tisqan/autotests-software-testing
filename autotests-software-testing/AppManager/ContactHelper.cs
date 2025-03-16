@@ -36,21 +36,12 @@ namespace WebAddressbookTests
             Type(By.Name("email"), contact.Email1);
             Type(By.Name("email2"), contact.Email2);
             Type(By.Name("homepage"), contact.HomePage);
-                        
-            driver.FindElement(By.Name("bday")).Click();
-            {
-                var dropdown = driver.FindElement(By.Name("bday"));
-                dropdown.FindElement(By.XPath($"//option[. = '{contact.Bday}']")).Click();
-            }
-            driver.FindElement(By.XPath($"//option[@value='{contact.Bday}']")).Click();
-            driver.FindElement(By.Name("bmonth")).Click();
-            {
-                var dropdown = driver.FindElement(By.Name("bmonth"));
-                dropdown.FindElement(By.XPath($"//option[. = '{contact.Bmonth}']")).Click();
-            }
-            driver.FindElement(By.XPath($"//option[@value='{contact.Bmonth}']")).Click();
-
-            Type(By.Name("byear"), contact.Name);
+            Select(By.Name("bday"), contact.Bday);
+            Select(By.Name("bmonth"), contact.Bmonth);
+            Type(By.Name("byear"), contact.Byear);
+            Select(By.Name("aday"), contact.Aday);
+            Select(By.Name("amonth"), contact.Amonth);
+            Type(By.Name("ayear"), contact.Ayear);
             return this;
         }
 
@@ -78,31 +69,88 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper ReturnToHomePage()
+        {
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
+
 
         public ContactHelper Create(ContactData contact)
         {
-            manager.Navigator.GoToContactPage();
+            manager.Navigator.GoToAddContactPage();
             FillFormContact(contact);
             SubmitContactCreation();
+            ReturnToHomePage();
             return this;
         }
+
 
         public ContactHelper Delete(int index)
         {
             manager.Navigator.GoToHomePage();
+
+            if (!ContactExists())
+            {
+                Create(new ContactData("TestName", "TestLastName", "test@jw.com")
+                {
+                    NickName = "test",
+                    Title = "TestName TestLastName",
+                    Company = "test",
+                    Address = "test",
+                    HomePhone = "123-123",
+                    MobilePhone = "32323232",
+                    Work = "test",
+                    Email2 = "test2@jw.com",
+                    HomePage = "testHomePage",
+                    Bday = "18",
+                    Bmonth = "June",
+                    Byear = "1985"
+                });
+            }
+
             SelectContact(index);
             DeleteContact();
+            ReturnToHomePage();
             return this;
         }
 
         public ContactHelper Modify(ContactData contact, int index)
         {
             manager.Navigator.GoToHomePage();
+            
+            if (!ContactExists())
+            {
+                Create(new ContactData("TestName", "TestLastName", "test@jw.com")
+                {
+                    NickName = "test",
+                    Title = "TestName TestLastName",
+                    Company = "test",
+                    Address = "test",
+                    HomePhone = "123-123",
+                    MobilePhone = "32323232",
+                    Work = "test",
+                    Email2 = "test2@jw.com",
+                    HomePage = "testHomePage",
+                    Bday = "18",
+                    Bmonth = "June",
+                    Byear = "1985"
+                });
+            }
+
             EditContact(index);
             FillFormContact(contact);
             UpdateContact();
+            ReturnToHomePage();
             return this;
         }
+
+        public bool ContactExists()
+        {
+            return IsElementPresent(By.XPath("//tr/td[@class = 'center']/input"));
+        }
+
 
     }
 }

@@ -10,15 +10,17 @@ namespace WebAddressbookTests
 {
 
     [TestFixture]
-    public class CreationGroupTests : TestBase
+    public class CreationGroupTests : AuthTestBase
     {
         [Test]
         public void CreateGroup()
         {
-            
-            GroupData group = new GroupData("testNamegroup");
-            group.Header = "testHeadergroup";
-            group.Footer = "testFootergroup";
+
+            GroupData group = new GroupData("Group")
+            {
+                Header = "testHeadergroup",
+                Footer = "testFootergroup"
+            };
 
             app.Groups.Create(group);
 
