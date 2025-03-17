@@ -64,12 +64,6 @@ namespace WebAddressbookTests
 
         }
 
-        //public static void StopApp()
-        //{
-        //    app.Value.driver.Quit();
-        //}
-
-
         public LoginHelper Auth { get => loginHelper; }
         public NavigationHelper Navigator { get => navigationHelper; }
         public GroupHelper Groups { get => groupHelper; }

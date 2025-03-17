@@ -39,9 +39,9 @@ namespace WebAddressbookTests
             Select(By.Name("bday"), contact.Bday);
             Select(By.Name("bmonth"), contact.Bmonth);
             Type(By.Name("byear"), contact.Byear);
-            Select(By.Name("aday"), contact.Aday);
-            Select(By.Name("amonth"), contact.Amonth);
-            Type(By.Name("ayear"), contact.Ayear);
+            //Select(By.Name("aday"), contact.Aday);
+            //Select(By.Name("amonth"), contact.Amonth);
+            //Type(By.Name("ayear"), contact.Ayear);
             return this;
         }
 
@@ -90,26 +90,6 @@ namespace WebAddressbookTests
         public ContactHelper Delete(int index)
         {
             manager.Navigator.GoToHomePage();
-
-            if (!ContactExists())
-            {
-                Create(new ContactData("TestName", "TestLastName", "test@jw.com")
-                {
-                    NickName = "test",
-                    Title = "TestName TestLastName",
-                    Company = "test",
-                    Address = "test",
-                    HomePhone = "123-123",
-                    MobilePhone = "32323232",
-                    Work = "test",
-                    Email2 = "test2@jw.com",
-                    HomePage = "testHomePage",
-                    Bday = "18",
-                    Bmonth = "June",
-                    Byear = "1985"
-                });
-            }
-
             SelectContact(index);
             DeleteContact();
             ReturnToHomePage();
@@ -119,26 +99,6 @@ namespace WebAddressbookTests
         public ContactHelper Modify(ContactData contact, int index)
         {
             manager.Navigator.GoToHomePage();
-            
-            if (!ContactExists())
-            {
-                Create(new ContactData("TestName", "TestLastName", "test@jw.com")
-                {
-                    NickName = "test",
-                    Title = "TestName TestLastName",
-                    Company = "test",
-                    Address = "test",
-                    HomePhone = "123-123",
-                    MobilePhone = "32323232",
-                    Work = "test",
-                    Email2 = "test2@jw.com",
-                    HomePage = "testHomePage",
-                    Bday = "18",
-                    Bmonth = "June",
-                    Byear = "1985"
-                });
-            }
-
             EditContact(index);
             FillFormContact(contact);
             UpdateContact();

@@ -16,6 +16,15 @@ namespace WebAddressbookTests
         [Test]
         public void ModifyGroup()
         {
+            if (!app.Groups.GroupExists())
+            {
+                app.Groups.Create(new GroupData("nameGroup")
+                {
+                    Header = "headerGroup",
+                    Footer = "footerGroup"
+                });
+            }
+
             GroupData group = new GroupData("testNamegroup1");
             group.Header = "testHeadergroup1";
             group.Footer = "testFootergroup1";

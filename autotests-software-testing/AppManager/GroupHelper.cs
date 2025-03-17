@@ -70,10 +70,10 @@ namespace WebAddressbookTests
         public GroupHelper Create(GroupData group)
         {
             manager.Navigator.GoToGroupPage();
-                InitGroupCreation();
-                FillGroupForm(group);
-                SubmitGroupCreation();
-                ReturnToGroupsPage();
+            InitGroupCreation();
+            FillGroupForm(group);
+            SubmitGroupCreation();
+            ReturnToGroupsPage();
 
             return this;
 
@@ -82,16 +82,6 @@ namespace WebAddressbookTests
         public GroupHelper Delete(int index)
         {
             manager.Navigator.GoToGroupPage();
-
-            if (!GroupExists())
-            {
-                Create(new GroupData("nameGroup")
-                {
-                    Header = "headerGroup",
-                    Footer = "footerGroup"
-                });
-            }
-
             SelectGroup(index);
             DeleteGroup();
             ReturnToGroupsPage();
@@ -101,16 +91,6 @@ namespace WebAddressbookTests
         public GroupHelper Modify(GroupData group, int index)
         {
             manager.Navigator.GoToGroupPage();
-
-            if (!GroupExists())
-            {
-                Create(new GroupData("nameGroup")
-                {
-                    Header = "headerGroup",
-                    Footer = "footerGroup"
-                });
-            }
-
             SelectGroup(index);
             EditGroup();
             FillGroupForm(group);
@@ -123,7 +103,7 @@ namespace WebAddressbookTests
         {
             return IsElementPresent(By.XPath("//form[@action = '/addressbook/group.php']/span[@class = 'group']"));
         }
- 
 
+      
     }
 }

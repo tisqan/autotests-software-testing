@@ -15,6 +15,15 @@ namespace WebAddressbookTests
         [Test]
         public void DeleteGroup()
         {
+            if (!app.Groups.GroupExists())
+            {
+                app.Groups.Create(new GroupData("nameGroup")
+                {
+                    Header = "headerGroup",
+                    Footer = "footerGroup"
+                });
+            }
+
             app.Groups.Delete(1);
 
         }
