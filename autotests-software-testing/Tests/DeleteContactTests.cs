@@ -39,6 +39,8 @@ namespace WebAddressbookTests
 
             app.Contacts.Delete(2);
 
+            Assert.That(oldContacts.Count - 1, Is.EqualTo(app.Contacts.GetContactCount()));
+
             List<ContactData> newContacts = app.Contacts.GetGroupList();
 
             oldContacts.RemoveAt(0);
