@@ -39,9 +39,9 @@ namespace WebAddressbookTests
             Select(By.Name("bday"), contact.Bday);
             Select(By.Name("bmonth"), contact.Bmonth);
             Type(By.Name("byear"), contact.Byear);
-            //Select(By.Name("aday"), contact.Aday);
-            //Select(By.Name("amonth"), contact.Amonth);
-            //Type(By.Name("ayear"), contact.Ayear);
+            Select(By.Name("aday"), contact.Aday);
+            Select(By.Name("amonth"), contact.Amonth);
+            Type(By.Name("ayear"), contact.Ayear);
             return this;
         }
 
@@ -111,6 +111,21 @@ namespace WebAddressbookTests
             return IsElementPresent(By.XPath("//tr/td[@class = 'center']/input"));
         }
 
+        public List<ContactData> GetGroupList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//table/tbody/tr[@name = 'entry']"));
+
+            foreach (IWebElement element in elements)
+            {
+                string firstName = element.FindElement(By.XPath("./td[3]")).Text;
+                string lastName = element.FindElement(By.XPath("./td[2]")).Text;
+                contacts.Add(new ContactData(firstName, lastName));
+            }
+
+            return contacts;
+        }
 
     }
 }

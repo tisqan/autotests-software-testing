@@ -13,7 +13,7 @@ namespace WebAddressbookTests
         [Test]
         public void CreateContact()
         {
-            ContactData contact = new ContactData("Jhon", "Wick", "111@jw.com")
+            ContactData contact = new ContactData("Jhon", "Wick")
             {
                NickName = "JW5",
                Title = "Jhon Wick",
@@ -31,9 +31,18 @@ namespace WebAddressbookTests
                Amonth = "June",
                Ayear = "1985"
             };
-            
-            
+
+            List<ContactData> oldContacts = app.Contacts.GetGroupList();
+
             app.Contacts.Create(contact);
+
+            List<ContactData> newContacts = app.Contacts.GetGroupList();
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.That(oldContacts, Is.EqualTo(newContacts));
+
+            
             
         }
 

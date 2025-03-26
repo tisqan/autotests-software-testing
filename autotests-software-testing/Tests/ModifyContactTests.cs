@@ -13,7 +13,7 @@ namespace WebAddressbookTests
         [Test]
         public void ModifyContact()
         {
-            ContactData contact = new ContactData("Jhon555", "Wick666", "111@jw.com")
+            ContactData contact = new ContactData("Jhon555", "Wick666")
             {
                 NickName = null,
                 Title = null,
@@ -35,7 +35,7 @@ namespace WebAddressbookTests
 
             if (!app.Contacts.ContactExists())
             {
-                app.Contacts.Create(new ContactData("TestName", "TestLastName", "test@jw.com")
+                app.Contacts.Create(new ContactData("TestName", "TestLastName")
                 {
                     NickName = "test",
                     Title = "TestName TestLastName",
@@ -54,8 +54,18 @@ namespace WebAddressbookTests
                     Ayear = "1985",
                 });
             }
-            app.Contacts.Modify(contact, 2);
             
+            List<ContactData> oldContacts = app.Contacts.GetGroupList();
+
+            app.Contacts.Modify(contact, 2);
+
+            List<ContactData> newContacts = app.Contacts.GetGroupList();
+            oldContacts[0].Name = contact.Name;
+            oldContacts[0].LastName = contact.LastName;
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.That(oldContacts, Is.EqualTo(newContacts));
+
         }
 
         

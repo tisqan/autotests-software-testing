@@ -15,7 +15,7 @@ namespace WebAddressbookTests
         {
             if (!app.Contacts.ContactExists())
             {
-                app.Contacts.Create(new ContactData("TestName", "TestLastName", "test@jw.com")
+                app.Contacts.Create(new ContactData("TestName", "TestLastName")
                 {
                     NickName = "test",
                     Title = "TestName TestLastName",
@@ -34,8 +34,15 @@ namespace WebAddressbookTests
                     Ayear = "1985",
                 });
             }
+                        
+            List<ContactData> oldContacts = app.Contacts.GetGroupList();
 
             app.Contacts.Delete(2);
+
+            List<ContactData> newContacts = app.Contacts.GetGroupList();
+
+            oldContacts.RemoveAt(0);
+            Assert.That(oldContacts, Is.EqualTo(newContacts));
         }
 
         

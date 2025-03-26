@@ -22,7 +22,15 @@ namespace WebAddressbookTests
                 Footer = "testFootergroup"
             };
 
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
             app.Groups.Create(group);
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.That(oldGroups, Is.EqualTo(newGroups));
 
         }
 
@@ -34,8 +42,34 @@ namespace WebAddressbookTests
             group.Header = "";
             group.Footer = "";
 
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
             app.Groups.Create(group);
 
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.That(oldGroups, Is.EqualTo(newGroups));
+        }
+
+        [Test]
+        public void CreateBadGroup()
+        {
+
+            GroupData group = new GroupData("nm'dsd");
+            group.Header = "";
+            group.Footer = "";
+
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            app.Groups.Create(group);
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.That(oldGroups, Is.EqualTo(newGroups));
         }
 
 

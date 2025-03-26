@@ -24,7 +24,15 @@ namespace WebAddressbookTests
                 });
             }
 
-            app.Groups.Delete(1);
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            app.Groups.Delete(0);
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            
+            oldGroups.RemoveAt(0);
+            Assert.That(oldGroups, Is.EqualTo(newGroups));
+
 
         }
 
