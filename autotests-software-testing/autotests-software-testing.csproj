@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\AccountDate.cs" />
+    <Compile Include="Tests\ContactInformationTests.cs" />
     <Compile Include="Tests\LoginTests.cs" />
     <Compile Include="Tests\ModifyContactTests.cs" />
     <Compile Include="Tests\DeleteContactTests.cs" />

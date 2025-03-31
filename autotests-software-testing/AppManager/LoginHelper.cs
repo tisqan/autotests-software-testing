@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium;
+using System.Security.Principal;
 
 
 namespace WebAddressbookTests
@@ -41,7 +42,8 @@ namespace WebAddressbookTests
         public bool IsLoggedIn(AccountData account)
         {
             return IsLoggedIn()
-                && driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text == account.Username;
+                && GetLoggetUserName() == account.Username;
+                
         }
 
         public void Logout()
@@ -51,6 +53,12 @@ namespace WebAddressbookTests
                 driver.FindElement(By.LinkText("Logout")).Click();
             }
 
+        }
+
+        public string GetLoggetUserName()
+        {
+            string text = driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text;
+            return text.Substring(1, text.Length - 2);
         }
     }
 }

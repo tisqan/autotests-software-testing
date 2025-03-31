@@ -23,7 +23,7 @@ namespace WebAddressbookTests
                     Address = "test",
                     HomePhone = "123-123",
                     MobilePhone = "32323232",
-                    Work = "test",
+                    WorkPhone = "333-333",
                     Email2 = "test2@jw.com",
                     HomePage = "testHomePage",
                     Bday = "18",
@@ -35,13 +35,13 @@ namespace WebAddressbookTests
                 });
             }
                         
-            List<ContactData> oldContacts = app.Contacts.GetGroupList();
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
 
             app.Contacts.Delete(2);
 
             Assert.That(oldContacts.Count - 1, Is.EqualTo(app.Contacts.GetContactCount()));
 
-            List<ContactData> newContacts = app.Contacts.GetGroupList();
+            List<ContactData> newContacts = app.Contacts.GetContactList();
 
             oldContacts.RemoveAt(0);
             Assert.That(oldContacts, Is.EqualTo(newContacts));
