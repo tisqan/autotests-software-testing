@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.Events;
+using System.Text.RegularExpressions;
 
 
 namespace WebAddressbookTests
@@ -31,7 +33,7 @@ namespace WebAddressbookTests
             Type(By.Name("lastname"), contact.LastName);
             Type(By.Name("nickname"), contact.NickName);
             Type(By.Name("title"), contact.Title);
-            Type(By.Name("company"), contact.Name);
+            Type(By.Name("company"), contact.Company);
             Type(By.Name("address"), contact.Address);
             Type(By.Name("home"), contact.HomePhone);
             Type(By.Name("mobile"), contact.MobilePhone);
@@ -65,6 +67,13 @@ namespace WebAddressbookTests
         {
             driver.FindElements(By.Name("entry"))[index]
                 .FindElements(By.TagName("td"))[7]
+                .FindElement(By.TagName("a")).Click();
+            return this;
+        }
+        public ContactHelper ViewContactProperties(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"))[6]
                 .FindElement(By.TagName("a")).Click();
             return this;
         }
@@ -150,6 +159,9 @@ namespace WebAddressbookTests
             EditContact(index);
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string nickName = driver.FindElement(By.Name("nickname")).GetAttribute("value");
+            string title = driver.FindElement(By.Name("title")).GetAttribute("value");
+            string company = driver.FindElement(By.Name("company")).GetAttribute("value");
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
@@ -158,6 +170,9 @@ namespace WebAddressbookTests
             return new ContactData(firstName, lastName)
             {
                 Address = address,
+                NickName = nickName,
+                Company = company,
+                Title = title,
                 HomePhone = homePhone,
                 MobilePhone = mobilePhone,
                 WorkPhone = workPhone
@@ -183,5 +198,42 @@ namespace WebAddressbookTests
                 
             };
         }
+
+
+        public ContactData GetContactInformationViewProperties(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            ViewContactProperties(index);
+
+            char[] chars = { '\r', '\n' };
+            string fulltext = driver.FindElement(By.XPath("//div[@id='content']")).Text;
+            string[] values = fulltext.Split(chars);
+
+            string fullName = values[0];
+            string nickName = values[2];
+            string title = values[4];
+            string company = values[6];
+            string address = values[8];
+            string homePhone = new Regex(@"\d*\s*\(?\d+\)?\s*\d+\s*-?\d+\s*-?\d+").Match(values[12]).Value.Trim();
+            string mobilePhone = new Regex(@"\d*\s*\(?\d+\)?\s*\d+\s*-?\d+\s*-?\d+").Match(values[14]).Value.Trim();
+            string workPhone = new Regex(@"\d*\s*\(?\d+\)?\s*\d+\s*-?\d+\s*-?\d+").Match(values[16]).Value.Trim();
+
+
+
+            return new ContactData()
+            {
+                FullName = fullName,
+                NickName = nickName,
+                Title = title,
+                Company = company,
+                Address = address,
+                HomePhone = homePhone,
+                MobilePhone = mobilePhone,
+                WorkPhone = workPhone,
+
+            };
+
+        }
+
     }
 }
