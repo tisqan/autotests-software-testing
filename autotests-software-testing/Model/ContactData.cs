@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 
 namespace WebAddressbookTests
@@ -10,6 +11,7 @@ namespace WebAddressbookTests
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string _allPhones;
+        private string _allEmails;
         private string _fullName;
 
         public ContactData(string name, string lastName)
@@ -54,7 +56,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();
+                    return (CleanUpPhone(HomePhone) + CleanUpPhone(MobilePhone) + CleanUpPhone(WorkPhone)).Trim();
                 }
 
             }
@@ -62,6 +64,25 @@ namespace WebAddressbookTests
                     
             
             set => _allPhones = value; }
+
+        public string AllEmails
+        {
+            get
+            {
+                if (_allEmails != null)
+                {
+                    return _allEmails;
+                }
+                else
+                {
+                    return (CleanUpEmail(Email1) + CleanUpEmail(Email2) + CleanUpEmail(Email3)).Trim();
+                }
+
+            }
+
+
+            set => _allEmails = value;
+        }
 
         public string FullName {
             get 
@@ -79,7 +100,7 @@ namespace WebAddressbookTests
             set => _fullName = value;
         }
 
-        private string CleanUp(string phone)
+        private string CleanUpPhone(string phone)
         {
             if(phone == null || phone == "")
             {
@@ -87,6 +108,16 @@ namespace WebAddressbookTests
             }
 
             return Regex.Replace(phone, "[-() ]", "") + "\r\n";
+        }
+
+        private string CleanUpEmail(string email)
+        {
+            if (email == null || email == "")
+            {
+                return "";
+            }
+
+            return email.Replace(" ", "") + "\r\n";
         }
 
         public bool Equals(ContactData other)

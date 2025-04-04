@@ -19,6 +19,7 @@ namespace WebAddressbookTests
             Assert.That(fromTable, Is.EqualTo(fromForm));
             Assert.That(fromTable.Address, Is.EqualTo(fromForm.Address));
             Assert.That(fromTable.AllPhones, Is.EqualTo(fromForm.AllPhones));
+            Assert.That(fromTable.AllEmails, Is.EqualTo(fromForm.AllEmails));
         }
 
         [Test]
