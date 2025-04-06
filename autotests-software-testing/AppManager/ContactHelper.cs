@@ -159,17 +159,6 @@ namespace WebAddressbookTests
             manager.Navigator.GoToHomePage();
             EditContact(index);
 
-            //var formElements = driver.FindElements(By.XPath("//div[@id = 'content']/form/*"));
-
-            //List<Tuple<string, string>> contactdata = new List<Tuple<string, string>>();
-
-            //for(int i = 0; i <= formElements.Count; i++)
-            //{
-            //    if (formElements[i].TagName != "label") { continue; }
-            //    contactdata.Add(new Tuple<string, string>(formElements[i].GetAttribute("value"), formElements[++i].GetAttribute("value")));
-            //}
-
-
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
             string nickName = driver.FindElement(By.Name("nickname")).GetAttribute("value");

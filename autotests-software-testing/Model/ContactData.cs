@@ -13,7 +13,6 @@ namespace WebAddressbookTests
     {
         private string _allPhones;
         private string _allEmails;
-        //private string _fullName;
         private string _allInfoContact;
 
         public ContactData(string name, string lastName)
