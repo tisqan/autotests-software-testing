@@ -8,6 +8,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.Events;
 using System.Text.RegularExpressions;
+using System.Reflection.Emit;
 
 
 namespace WebAddressbookTests
@@ -157,6 +158,18 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToHomePage();
             EditContact(index);
+
+            //var formElements = driver.FindElements(By.XPath("//div[@id = 'content']/form/*"));
+
+            //List<Tuple<string, string>> contactdata = new List<Tuple<string, string>>();
+
+            //for(int i = 0; i <= formElements.Count; i++)
+            //{
+            //    if (formElements[i].TagName != "label") { continue; }
+            //    contactdata.Add(new Tuple<string, string>(formElements[i].GetAttribute("value"), formElements[++i].GetAttribute("value")));
+            //}
+
+
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
             string nickName = driver.FindElement(By.Name("nickname")).GetAttribute("value");
@@ -170,8 +183,10 @@ namespace WebAddressbookTests
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
 
-            return new ContactData(firstName, lastName)
+            return new ContactData()
             {
+                Name = firstName,
+                LastName = lastName,
                 Address = address,
                 NickName = nickName,
                 Company = company,
@@ -209,38 +224,15 @@ namespace WebAddressbookTests
         }
 
 
-        public ContactData GetContactInformationViewProperties(int index)
+        public string GetContactInformationViewProperties(int index)
         {
             manager.Navigator.GoToHomePage();
             ViewContactProperties(index);
 
             char[] chars = { '\r', '\n' };
             string fulltext = driver.FindElement(By.XPath("//div[@id='content']")).Text;
-            string[] values = fulltext.Split(chars);
 
-            string fullName = values[0];
-            string nickName = values[2];
-            string title = values[4];
-            string company = values[6];
-            string address = values[8];
-            string homePhone = new Regex(@"\d*\s*\(?\d+\)?\s*\d+\s*-?\d+\s*-?\d+").Match(values[12]).Value.Trim();
-            string mobilePhone = new Regex(@"\d*\s*\(?\d+\)?\s*\d+\s*-?\d+\s*-?\d+").Match(values[14]).Value.Trim();
-            string workPhone = new Regex(@"\d*\s*\(?\d+\)?\s*\d+\s*-?\d+\s*-?\d+").Match(values[16]).Value.Trim();
-
-
-
-            return new ContactData()
-            {
-                FullName = fullName,
-                NickName = nickName,
-                Title = title,
-                Company = company,
-                Address = address,
-                HomePhone = homePhone,
-                MobilePhone = mobilePhone,
-                WorkPhone = workPhone,
-
-            };
+            return fulltext;
 
         }
 

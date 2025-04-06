@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -12,7 +13,8 @@ namespace WebAddressbookTests
     {
         private string _allPhones;
         private string _allEmails;
-        private string _fullName;
+        //private string _fullName;
+        private string _allInfoContact;
 
         public ContactData(string name, string lastName)
         {
@@ -87,18 +89,89 @@ namespace WebAddressbookTests
         public string FullName {
             get 
             {
-                if (_fullName != null) 
-                {
-                    return _fullName;
-                }
-                else
-                {
-                    return Name + " " + LastName;
-                }
-
+                return (Name + " " + LastName).Trim(' ');
             }
-            set => _fullName = value;
+            
         }
+
+        
+        public string GetAllInfoContact()
+        {
+            
+            if (_allInfoContact != null)
+            {
+                return _allInfoContact;
+            }
+            else
+            {
+                
+                return (GetUserInfo() + "\r\n" + GetPhones() + "\r\n" + GetEmails()).Trim();
+            }
+        }
+
+        private string GetUserInfo()
+        {
+            string userInfo = "";
+            if (FullName != "")
+            {
+                userInfo += FullName + "\r\n";
+            }
+            if (NickName != "")
+            {
+                userInfo += NickName + "\r\n";
+            }
+            if (Title != "")
+            {
+                userInfo += Title + "\r\n";
+            }
+            if (Company != "")
+            {
+                userInfo += Company + "\r\n";
+            }
+            if (Address != "")
+            {
+                userInfo += Address + "\r\n";
+            }
+            
+            return userInfo;
+        }
+
+        private string GetPhones()
+        {
+            string phoneInfo = "";
+            if (HomePhone != "")
+            {
+                phoneInfo += "H: " + HomePhone + "\r\n";
+            }
+            if (MobilePhone != "")
+            {
+                phoneInfo += "M: " + MobilePhone + "\r\n";
+            }
+            if (WorkPhone != "")
+            {
+                phoneInfo += "W: " + WorkPhone + "\r\n";
+            }
+            return phoneInfo;
+        }
+
+        private string GetEmails()
+        {
+            string emailInfo = "";
+            if (Email1 != "")
+            {
+                emailInfo += Email1 + "\r\n";
+            }
+            if (Email2 != "")
+            {
+                emailInfo += Email2 + "\r\n";
+            }
+            if (Email3 != "")
+            {
+                emailInfo += Email3 + "\r\n";
+            }
+            return emailInfo;
+        }
+
 
         private string CleanUpPhone(string phone)
         {
@@ -118,6 +191,16 @@ namespace WebAddressbookTests
             }
 
             return email.Replace(" ", "") + "\r\n";
+        }
+
+        private string CleanUpTitle(string title)
+        {
+            if (title == null || title == "")
+            {
+                return "";
+            }
+
+            return title.Replace(" ", "") + "\r\n";
         }
 
         public bool Equals(ContactData other)

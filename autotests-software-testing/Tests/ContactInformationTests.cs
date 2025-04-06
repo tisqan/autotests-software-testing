@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
 
@@ -26,16 +27,10 @@ namespace WebAddressbookTests
         public void TestContactInformationProperties()
         {
             ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(0);
-            ContactData fromPageProperties = app.Contacts.GetContactInformationViewProperties(0);
+            string fromPageProperties = app.Contacts.GetContactInformationViewProperties(0);
+            
+            Assert.That(fromForm.GetAllInfoContact(), Is.EqualTo(fromPageProperties));
 
-            Assert.That(fromForm.FullName, Is.EqualTo(fromPageProperties.FullName));
-            Assert.That(fromForm.NickName, Is.EqualTo(fromPageProperties.NickName));
-            Assert.That(fromForm.Title, Is.EqualTo(fromPageProperties.Title));
-            Assert.That(fromForm.Company, Is.EqualTo(fromPageProperties.Company));
-            Assert.That(fromForm.Address, Is.EqualTo(fromPageProperties.Address));
-            Assert.That(fromForm.HomePhone, Is.EqualTo(fromPageProperties.HomePhone));
-            Assert.That(fromForm.MobilePhone, Is.EqualTo(fromPageProperties.MobilePhone));
-            Assert.That(fromForm.WorkPhone, Is.EqualTo(fromPageProperties.WorkPhone));
         }
 
 
