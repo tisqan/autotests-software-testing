@@ -132,7 +132,7 @@ namespace WebAddressbookTests
                 userInfo += Address + "\r\n";
             }
             
-            return userInfo;
+            return userInfo.Trim('\n', '\r');
         }
 
         private string GetPhones()
@@ -150,7 +150,7 @@ namespace WebAddressbookTests
             {
                 phoneInfo += "W: " + WorkPhone + "\r\n";
             }
-            return phoneInfo;
+            return phoneInfo.Trim('\n', '\r');
         }
 
         private string GetEmails()
@@ -168,7 +168,7 @@ namespace WebAddressbookTests
             {
                 emailInfo += Email3 + "\r\n";
             }
-            return emailInfo;
+            return emailInfo.Trim('\n', '\r');
         }
 
 
