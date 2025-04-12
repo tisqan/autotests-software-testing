@@ -131,8 +131,12 @@ namespace WebAddressbookTests
             {
                 userInfo += Address + "\r\n";
             }
+            if (userInfo == "")
+            {
+                userInfo = userInfo.Trim('\n', '\r');
+            }
             
-            return userInfo.Trim('\n', '\r');
+            return userInfo;
         }
 
         private string GetPhones()
@@ -150,7 +154,11 @@ namespace WebAddressbookTests
             {
                 phoneInfo += "W: " + WorkPhone + "\r\n";
             }
-            return phoneInfo.Trim('\n', '\r');
+            if(phoneInfo == "")
+            {
+                phoneInfo = phoneInfo.Trim('\n', '\r');
+            }
+            return phoneInfo;
         }
 
         private string GetEmails()
@@ -168,7 +176,11 @@ namespace WebAddressbookTests
             {
                 emailInfo += Email3 + "\r\n";
             }
-            return emailInfo.Trim('\n', '\r');
+            if(emailInfo == "")
+            {
+                emailInfo = emailInfo.Trim('\n', '\r');
+            }
+            return emailInfo;
         }
 
 
