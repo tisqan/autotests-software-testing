@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
-
+using LinqToDB;
+using LinqToDB.Mapping;
 
 namespace WebAddressbookTests
 {
+    [Table(Name = "addressbook")]
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string _allPhones;
@@ -27,9 +29,17 @@ namespace WebAddressbookTests
 
         }
 
+        [Column(Name = "id"), PrimaryKey]
+        public string Id { get; set; }
 
+        [Column(Name = "firstname")]
         public string Name { get; set; }
+        
+        [Column(Name = "lastname")]
         public string LastName { get; set; }
+        
+        //[Column(Name = "deprecated")]
+        //public string Deprecated { get; set; }
         public string NickName { get; set; }
         public string Photo { get; set; }
         public string Title { get; set; }
@@ -48,6 +58,7 @@ namespace WebAddressbookTests
         public string Aday { get; set; }
         public string Amonth { get; set; }
         public string Ayear { get; set; }
+        
         public string AllPhones {
             get 
             {
@@ -247,6 +258,14 @@ namespace WebAddressbookTests
             }
 
             return (Name + LastName).CompareTo(other.Name + other.LastName);
+        }
+
+        public static List<ContactData> GetAll()
+        {
+            using (AddressbookDB db = new AddressbookDB())
+            {
+                return (from c in db.Contacts select c).ToList();
+            }
         }
     }
 

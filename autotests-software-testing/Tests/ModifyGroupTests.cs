@@ -11,7 +11,7 @@ namespace WebAddressbookTests
 {
 
     [TestFixture]
-    public class ModifyGroupTests : AuthTestBase
+    public class ModifyGroupTests : GroupTestBase
     {
         [Test]
         public void ModifyGroup()
@@ -25,19 +25,19 @@ namespace WebAddressbookTests
                 });
             }
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
             GroupData oldData = oldGroups[0];
 
             GroupData newData = new GroupData("testNamegroup1");
             newData.Header = "testHeadergroup1";
             newData.Footer = "testFootergroup1";
 
-            app.Groups.Modify(newData, 0);
+            app.Groups.Modify(oldData.Id, newData);
 
             Assert.That(oldGroups.Count, Is.EqualTo(app.Groups.GetGroupCount()));
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
-            oldGroups[0].Name = newData.Name;
+            List<GroupData> newGroups = GroupData.GetAll();
+            oldData.Name = newData.Name;
             oldGroups.Sort();
             newGroups.Sort();
             Assert.That(oldGroups, Is.EqualTo(newGroups));

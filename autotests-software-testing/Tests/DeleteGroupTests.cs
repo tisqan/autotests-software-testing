@@ -10,7 +10,7 @@ namespace WebAddressbookTests
 {
 
     [TestFixture]
-    public class DeleteGroupTests : AuthTestBase
+    public class DeleteGroupTests : GroupTestBase
     {
         [Test]
         public void DeleteGroup()
@@ -24,15 +24,16 @@ namespace WebAddressbookTests
                 });
             }
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
+            GroupData toBeRemoved = oldGroups[0];
 
-            app.Groups.Delete(0);
+            app.Groups.Delete(toBeRemoved);
 
             Assert.That(oldGroups.Count - 1, Is.EqualTo(app.Groups.GetGroupCount()));
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
 
-            GroupData toBeRemoved = oldGroups[0];
+            
             oldGroups.RemoveAt(0);
             Assert.That(oldGroups, Is.EqualTo(newGroups));
 

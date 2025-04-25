@@ -13,7 +13,7 @@ namespace WebAddressbookTests
 {
 
     [TestFixture]
-    public class CreationGroupTests : AuthTestBase
+    public class CreationGroupTests : GroupTestBase
     {
        
         public static IEnumerable<GroupData> RandomGroupDataProvider()
@@ -65,13 +65,13 @@ namespace WebAddressbookTests
         public void CreateGroup(GroupData group)
         {
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             app.Groups.Create(group);
 
             Assert.That(oldGroups.Count + 1, Is.EqualTo(app.Groups.GetGroupCount()));
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
@@ -87,19 +87,27 @@ namespace WebAddressbookTests
             group.Header = "";
             group.Footer = "";
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             app.Groups.Create(group);
 
             Assert.That(oldGroups.Count + 1, Is.EqualTo(app.Groups.GetGroupCount()));
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
             Assert.That(oldGroups, Is.EqualTo(newGroups));
         }
 
+        [Test]
+        public void TestDBConnectivity()
+        {
+            foreach (var contact in GroupData.GetAll()[0].GetContacts())
+            {
+                Console.Out.WriteLine(contact);
+            }
+        }
 
     }
 }
