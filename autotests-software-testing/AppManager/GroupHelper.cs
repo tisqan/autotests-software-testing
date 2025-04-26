@@ -163,5 +163,16 @@ namespace WebAddressbookTests
             return driver.FindElements(By.CssSelector("span.group")).Count;
         }
 
+        public bool GroupExistsInDB(List<GroupData> group)
+        {
+            group = GroupData.GetAll();
+            if (group.Count == 0)
+            {
+                return true;
+            }
+            return false;
+
+        }
+
     }
 }

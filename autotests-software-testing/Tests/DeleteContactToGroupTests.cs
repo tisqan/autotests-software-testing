@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace WebAddressbookTests
 {
-    public class AddingContactToGroupTests : AuthTestBase
+    public class DeleteContactToGroupTests : AuthTestBase
     {
-        
-        [Test]
-        public void TestAddingContactToGroup()
-        {
-            List<GroupData> groupList = GroupData.GetAll();
 
+        [Test]
+        public void TestDeleteContactToGroup()
+        {
+
+            List<GroupData> groupList = GroupData.GetAll();
+            
             if (app.Groups.GroupExistsInDB(groupList))
             {
                 app.Groups.Create(new GroupData()
@@ -26,8 +26,8 @@ namespace WebAddressbookTests
                 });
             }
 
-            List<ContactData> contactList = ContactData.GetAll();
-            if (app.Contacts.ContactExistsInDB(contactList))
+            List<ContactData> contact = ContactData.GetAll();
+            if (app.Contacts.ContactExistsInDB(contact))
             {
                 app.Contacts.Create(new ContactData()
                 {
@@ -38,22 +38,24 @@ namespace WebAddressbookTests
                 });
             }
 
+
             GroupData group = GroupData.GetAll()[0];
-            
             List<ContactData> oldList = group.GetContacts();
 
-            ContactData contact = ContactData.GetAll().Except(oldList).First();
-                        
-            app.Contacts.AddContactToGroup(contact, group);
+            if (app.Contacts.ContactExistsInGroupInDB(oldList, group))
+            {
+                app.Contacts.AddContactToGroup(contact.First(), group);
+            }
+
+            app.Contacts.DeleteContactFromGroup(contact.First(), group);
 
             List<ContactData> newList = group.GetContacts();
-            oldList.Add(contact);
+            oldList.Remove(contact.First());
             oldList.Sort();
             newList.Sort();
 
             Assert.That(oldList, Is.EqualTo(newList));
         }
-
 
     }
 }
