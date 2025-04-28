@@ -38,12 +38,21 @@ namespace WebAddressbookTests
                 });
             }
 
+
+
             GroupData group = GroupData.GetAll()[0];
             
+            List<ContactData> allcontacts = group.GetContacts();
+            List<ContactData> contacts = ContactData.GetAll();
+            
+            if (app.Contacts.ContactExistsInGroupInDB(allcontacts, group) == false)
+            {
+                app.Contacts.DeleteContactFromGroup(contacts.First(), group);
+            }
+            
             List<ContactData> oldList = group.GetContacts();
-
-            ContactData contact = ContactData.GetAll().Except(oldList).First();
-                        
+            
+            ContactData contact = contacts.Except(oldList).First();
             app.Contacts.AddContactToGroup(contact, group);
 
             List<ContactData> newList = group.GetContacts();
